@@ -21,6 +21,7 @@ async function donloadImage(fileName) {
         return data.Body;
     } catch (error) {
         console.log("Error downloading image: ",error);
+        //throw new Error('Error downloading image: ',error);
     }
 }
 

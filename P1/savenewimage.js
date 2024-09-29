@@ -15,7 +15,6 @@ const client = new S3Client({
 
 
 async function uploadImage(fileName,image) {
-
     const params = {
         Body: image,
         Bucket: process.env.LIARA_BUCKET_NAME,
@@ -26,7 +25,7 @@ async function uploadImage(fileName,image) {
         const upload = new Upload({client,params});
         const result = await upload.done();
     } catch (error) {
-        console.log(error);
+        throw new Error('Error saving new image: ',error);
     }
 }
 
@@ -36,12 +35,16 @@ async function getImageLink(filename) {
         Bucket: process.env.LIARA_BUCKET_NAME,
         Key: filename,
     };
-      
-    const command = new GetObjectCommand(params);
-    const newImageLink = await getSignedUrl(client, command);
 
-    return newImageLink
-      
+    try {
+        const command = new GetObjectCommand(params);
+        const newImageLink = await getSignedUrl(client, command);
+    
+        return newImageLink;
+    }
+    catch(error) {
+        throw new Error('Error saving new image: ',error);
+    }      
 }
 
 

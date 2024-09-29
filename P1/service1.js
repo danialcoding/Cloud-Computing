@@ -1,6 +1,6 @@
 const express = require('express');
 const { runQuery } = require('./s1db');
-const {sendOnAmqp} = require('./amqpsendmsg');
+const { sendOnAmqp } = require('./amqpsendmsg');
 const { uploadImage } = require('./uploadimage');
 
 const multer = require('multer');
@@ -11,8 +11,6 @@ const app = express();
 app.use(express.json());
 
 const port = 5050;
-
-// !functions
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -34,6 +32,7 @@ if (!fs.existsSync(uploadDir)) {
 
 // !api
 app.post('/upload',getImages.single('image'),async (req,res) => {
+    let id;
     try {
         const email = req.body.email;
         const imageFile = req.file;
@@ -45,11 +44,9 @@ app.post('/upload',getImages.single('image'),async (req,res) => {
             return res.status(400).json({ error: 'Image is required!'});
         }
     
-        //! completed
         const result = await runQuery('INSERT_REQUEST',[email]);
-        const id = String(result.rows[0].id);
+        id = String(result.rows[0].id);
     
-        //! upload image file
         const imageBuffer = fs.readFileSync(imageFile.path);
         const fileExtension = path.extname(imageFile.originalname);
         uploadImage(id+fileExtension,imageBuffer);
@@ -61,12 +58,13 @@ app.post('/upload',getImages.single('image'),async (req,res) => {
         });
     }
     catch(err) {
-        console.log(err);
-        //! set status to failure
-        // res.json({
-        //     id: id,
-        //     msg
-        // });
+        try {
+            await runQuery('SET_STATUS_FAILURE',[id]);
+        }catch(e) {
+            console.log('Error in set to failure in service1: ',e);
+        }
+        
+        console.log('Service1 error : ',err);
     }
 });
 
@@ -94,12 +92,7 @@ app.get('/status', (req,res) => {
     }
 
 
-    res.json({
-        id: id,
-        status: status,
-        msg: msg,
-        image_url: url,
-    });
+
     
 });
 

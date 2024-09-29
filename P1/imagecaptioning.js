@@ -26,7 +26,8 @@ async function imageCaptioning(image) {
         console.log("Caption:", caption);
         return caption;
     } catch (error) {
-        console.error('Error captioning the image:', error);
+        //console.error('Error captioning the image:', error);
+        throw new Error('Error captioning the image: ',error);
     }
 }
 

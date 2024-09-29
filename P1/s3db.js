@@ -17,11 +17,12 @@ async function runQuery(queryName,params) {
         const result = await client.query(query,params);
         console.log('SQL query executed successfully.');
 
-        //console.log(result.rows[0]);
+        //console.log(result.rows);
         return result.rows;
     } 
     catch (err) {
-        console.error('Error executing SQL query', err.stack);
+        //console.error('Error executing SQL query', err);
+        throw new Error('Error executing SQL query in s3db: ',err);
     } 
     finally {
         if (client) {

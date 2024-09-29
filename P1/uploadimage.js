@@ -24,7 +24,8 @@ async function uploadImage(fileName,image) {
         const upload = new Upload({client,params});
         const result = await upload.done();
     } catch (error) {
-        console.log(error);
+        throw new Error('Error uploading image: ',error);
+        //console.log(error);
     }
 }
 

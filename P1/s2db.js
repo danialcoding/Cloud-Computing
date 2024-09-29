@@ -21,7 +21,8 @@ async function runQuery(queryName,params) {
     } 
     catch (err) {
         console.error('Error executing SQL query', err);
-    } 
+        //throw new Error('Error executing SQL query in s2db: ',err);
+    }
     finally {
         if (client) {
             client.release();

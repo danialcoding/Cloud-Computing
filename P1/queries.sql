@@ -31,8 +31,15 @@ SELECT id,email,image_caption
 FROM Requests
 where status = 'ready';
 
+-- SET_STATUS_FAILURE
+UPDATE Requests
+SET status = 'failure'
+WHERE id = $1;
+
 -- TEST_DB
--- SELECT * from Requests where id = 175;
+SELECT * from Requests;
 --delete from Requests;
+
+
 
 

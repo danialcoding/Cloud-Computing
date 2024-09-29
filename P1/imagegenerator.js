@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 const API_TOKEN = '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';
 const url = 'https://api-inference.huggingface.co/models/kothariyashhh/GenAi-Texttoimage';
 
@@ -29,7 +27,8 @@ async function imageGenerator(caption) {
         return imageBuffer;
     }
     catch (error) {
-        console.error('Error captioning the image:', error);
+        //console.error('Error captioning the image:', error);
+        throw new Error('Error captioning the image: ',error);
     }
 }
 

@@ -8,7 +8,7 @@ async function receiveOnAmqp() {
             const connection = await amqp.connect(url);
             console.log('Connected to RabbitMQ');
 
-            const channel = await connection.createChannel();
+            channel = await connection.createChannel();
             console.log('Channel created');
 
             const queue = 'msgqueue';
@@ -19,7 +19,7 @@ async function receiveOnAmqp() {
                 if (msg != null) {
                     const messageContent = msg.content.toString();
                     console.log(`Received message: ${messageContent}`);
-                    channel.ack(msg);
+                    channel.ack(msg)
                     resolve(messageContent);
 
                     setTimeout(async () => {
@@ -31,8 +31,9 @@ async function receiveOnAmqp() {
                 }
             });
         } catch (err) {
-            console.error('Error connecting to RabbitMQ', err);
-            reject(err);
+            //console.error('Error connecting to RabbitMQ: ', err);
+            throw new Error('Error connecting to RabbitMQ: ',err);
+            //reject(err);
         }
     });
 }

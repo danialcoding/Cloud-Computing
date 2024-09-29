@@ -26,7 +26,8 @@ async function runQuery(queryName,params) {
         return result;
     } 
     catch (err) {
-        console.error('Error executing SQL query', err.stack);
+        //console.error('Error executing SQL query', err.stack);
+        throw new Error('Error executing SQL query in s1db: ',err);
     } 
     finally {
         if (client) {

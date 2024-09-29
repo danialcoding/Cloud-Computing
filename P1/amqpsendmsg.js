@@ -22,7 +22,8 @@ async function sendOnAmqp(msg) {
             console.log('Connection closed');
         }, 500);
     } catch (error) {
-        console.error('Error connecting to RabbitMQ', error);
+        //console.error('Error connecting to RabbitMQ', error);
+        throw new Error('Error connecting to RabbitMQ: ',error);
     }
 }
 
