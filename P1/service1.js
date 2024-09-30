@@ -64,35 +64,65 @@ app.post('/upload',getImages.single('image'),async (req,res) => {
             console.log('Error in set to failure in service1: ',e);
         }
         
-        console.log('Service1 error : ',err);
+        console.log('Service1 upload api error : ',err);
     }
 });
 
-app.get('/status', (req,res) => {
-    const id = req.body.id;
-    const status = runQuery('GET_STATUS',[]).status;
-    var msg = '';
-    var url = '';
+app.get('/status',async (req,res) => {
 
-    //! complete
-    if(status === 'pending') {
-        msg = 'Your request is under review.';
-    }
-    else if(status === 'failure') {
-         //! complete
-    }
-    else if(status === 'ready') {
-         //! complete
-    }
-    else if(status === 'done') {
-         //! complete
-    }
-    else {
-        msg = 'This request has not exist.';
-    }
+    try {
+        const id = req.body.id;
+        const result = await runQuery('GET_STATUS',[id]);
+        const status = result.rows[0].status;
+        let msg = '';
+        let url = '';
 
-
-
+        if(status === 'pending') {
+            msg = 'Your request is under review.';
+            res.json({
+                id: id,
+                status: status,
+                msg: msg,
+            });
+        }
+        else if(status === 'failure') {
+            msg = 'Failed to process your request!'
+            res.json({
+                id: id,
+                status: status,
+                msg: msg,
+            });
+        }
+        else if(status === 'ready') {
+            msg = 'Your request is under review.';
+            res.json({
+                id: id,
+                status: status,
+                msg: msg,
+            });
+        }
+        else if(status === 'done') {
+            msg = 'Your request is under review.';
+            const result = await runQuery('GET_NEWIMAGE_URL',[id]);
+            url = result.rows[0].new_image_url;
+            res.json({
+                id: id,
+                status: status,
+                msg: msg,
+                url: url,
+            });
+        }
+        else {
+            msg = 'This request has not exist.';
+            res.json({
+                id: id,
+                msg: msg,
+            });
+        }
+    }
+    catch(err) {
+        console.log('Service1 status api error : ',err);
+    }
     
 });
 

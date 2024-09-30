@@ -23,8 +23,6 @@ async function service2() {
                 else {
                     runQuery('UPDATE_IMAGE_CAPTION',[id,imageCaption]);
                 }
-
-               //runQuery('UPDATE_IMAGE_CAPTION',[id,imageCaption]);
             }
         }
     }

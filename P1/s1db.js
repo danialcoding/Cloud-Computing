@@ -21,6 +21,7 @@ async function runQuery(queryName,params) {
         const result = await client.query(query,params);
         console.log('SQL query executed successfully.', result.rows);
 
+        console.log(result.rows[0])
         //console.log(result.rows[0].id);
 
         return result;

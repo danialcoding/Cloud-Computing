@@ -36,6 +36,11 @@ UPDATE Requests
 SET status = 'failure'
 WHERE id = $1;
 
+-- GET_NEWIMAGE_URL
+SELECT new_image_url
+FROM Requests
+where id = $1;
+
 -- TEST_DB
 SELECT * from Requests;
 --delete from Requests;
