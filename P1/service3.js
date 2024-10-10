@@ -14,21 +14,23 @@ async function service3() {
             console.log(readyRequest);
     
             for(let element in readyRequest) {
-                imageID = readyRequest[element].id;
-                const imageCaption = readyRequest[element].image_caption;
-                const userEmail = readyRequest[element].email;
-                const newImage = await imageGenerator(imageCaption);
+                imageID = await readyRequest[element].id;
+                if(imageID) {
+                    const imageCaption = readyRequest[element].image_caption;
+                    const userEmail = readyRequest[element].email;
+                    const newImage = await imageGenerator(imageCaption);
+        
+                    console.log(`Handling request ${imageID}`);
     
-                console.log(`Handling request ${imageID}`);
-
-                const newImageFileName = `new_${imageID}.png`;
-    
-                await uploadImage(newImageFileName,newImage);
-                const newImageLink = await getImageLink(newImageFileName);
-    
-                await runQuery('UPDATE_IMAGE_URL',[imageID,newImageLink]);
-                
-                await sendMail(imageID,newImageLink,userEmail);
+                    const newImageFileName = `new_${imageID}.png`;
+        
+                    await uploadImage(newImageFileName,newImage);
+                    const newImageLink = await getImageLink(newImageFileName);
+        
+                    await runQuery('UPDATE_IMAGE_URL',[imageID,newImageLink]);
+                    
+                    await sendMail(imageID,newImageLink,userEmail);
+                }
             } 
     
             await new Promise(resolve => setTimeout(resolve, 10000));

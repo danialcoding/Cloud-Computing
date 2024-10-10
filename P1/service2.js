@@ -21,6 +21,7 @@ async function service2() {
                     throw new Error(`Request failed.`);
                 }
                 else {
+                    
                     runQuery('UPDATE_IMAGE_CAPTION',[id,imageCaption]);
                 }
             }

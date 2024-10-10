@@ -43,4 +43,4 @@ module.exports = {
 };
 // const queryTag = 'TEST_DB';
 
-// runQuery(queryTag);
+// runQuery(queryTag,[]);
