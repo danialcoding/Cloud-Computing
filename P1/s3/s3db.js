@@ -17,7 +17,7 @@ async function runQuery(queryName,params) {
         const result = await client.query(query,params);
         console.log('SQL query executed successfully.');
 
-        console.log(result.rows);
+        // console.log(result.rows);
         return result.rows;
     } 
     catch (err) {
@@ -35,6 +35,6 @@ async function runQuery(queryName,params) {
 module.exports = {
     runQuery,
 };
-const queryTag = 'TEST_DB';
+// const queryTag = 'TEST_DB';
 
-runQuery(queryTag);
+// runQuery(queryTag);

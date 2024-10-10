@@ -17,13 +17,12 @@ async function runQuery(queryName,params) {
         const result = await client.query(query,params);
         console.log('SQL query executed successfully.');
 
-        console.log(result.rows);
-        return result.rows;
+        //console.log(result.rows[0]);
     } 
     catch (err) {
-        //console.error('Error executing SQL query', err);
-        throw new Error('Error executing SQL query in s3db: ',err);
-    } 
+        console.error('Error executing SQL query', err);
+        //throw new Error('Error executing SQL query in s2db: ',err);
+    }
     finally {
         if (client) {
             client.release();
@@ -35,6 +34,6 @@ async function runQuery(queryName,params) {
 module.exports = {
     runQuery,
 };
-const queryTag = 'TEST_DB';
+// const queryTag = 'TEST_DB';
 
-runQuery(queryTag);
+// runQuery(queryTag);

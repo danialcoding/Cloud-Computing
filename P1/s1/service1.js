@@ -49,7 +49,7 @@ app.post('/upload',getImages.single('image'),async (req,res) => {
             console.log('Error in set to failure in service1: ',e);
         }
         
-        console.log('Service1 upload api error : ',err);
+        // console.log('Service1 upload api error : ',err);
     }
 });
 

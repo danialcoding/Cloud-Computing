@@ -1,5 +1,7 @@
-const { S3Client } = require("@aws-sdk/client-s3");
+const { S3Client,GetObjectCommand } = require("@aws-sdk/client-s3");
 const { Upload } = require('@aws-sdk/lib-storage');
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+
 require("dotenv").config();
 
 const client = new S3Client({
@@ -13,7 +15,6 @@ const client = new S3Client({
 
 
 async function uploadImage(fileName,image) {
-
     const params = {
         Body: image,
         Bucket: process.env.LIARA_BUCKET_NAME,
@@ -24,14 +25,30 @@ async function uploadImage(fileName,image) {
         const upload = new Upload({client,params});
         const result = await upload.done();
     } catch (error) {
-        console.error('Error uploading image:', error);
-        throw new Error('Error uploading image: ',error);
-        //console.log(error);
+        throw new Error('Error saving new image: ',error);
     }
+}
+
+
+async function getImageLink(filename) {
+    const params = {
+        Bucket: process.env.LIARA_BUCKET_NAME,
+        Key: filename,
+    };
+
+    try {
+        const command = new GetObjectCommand(params);
+        const newImageLink = await getSignedUrl(client, command);
+    
+        return newImageLink;
+    }
+    catch(error) {
+        throw new Error('Error saving new image: ',error);
+    }      
 }
 
 
 module.exports = {
     uploadImage,
+    getImageLink,
 }
-// uploadImage('liara-poster.jpg');
