@@ -1,10 +1,11 @@
 const axios = require('axios');
+require('dotenv').config();
 
+
+const API_KEY = process.env.API_KEY;
 
 async function service2() {
   const api_url = 'https://api.api-ninjas.com/v1/randomword';
-  const API_KEY = '1/rgt/MVxRVRjFiTHgzHFA==zuVon7hpmTtr6xwI';
-
 
   try {
     const response = await axios.get(api_url, {
