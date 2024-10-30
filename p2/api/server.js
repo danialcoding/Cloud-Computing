@@ -33,7 +33,7 @@ app.get('/randword', async (req, res) => {
 });
 
 
-app.get('/word', async (req, res) => {
+app.get('/selected-word', async (req, res) => {
     const { word } = req.body;
 
     if (!word) {
