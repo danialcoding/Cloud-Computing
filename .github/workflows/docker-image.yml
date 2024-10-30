@@ -15,4 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build ./p2/api --file ./p2/api/Dockerfile --tag danialcoding007/learn-english:git
+      run: docker build ./p2/api --file ./p2/api/Dockerfile --tag danialcoding007/learn-english:altest
+
+    - name: Push the Docker image
+      run: docker push danialcoding007/learn-english:altest
