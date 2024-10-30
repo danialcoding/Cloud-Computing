@@ -18,7 +18,7 @@ jobs:
       run: docker login -u danialcoding007
       
     - name: Build the Docker image
-      run: docker build ./p2/api --file ./p2/api/Dockerfile --tag danialcoding007/learn-english:altest
+      run: docker build ./p2/api --file ./p2/api/Dockerfile --tag danialcoding007/learn-english:latest
 
     - name: Push the Docker image
-      run: docker push danialcoding007/learn-english:altest
+      run: docker push danialcoding007/learn-english:latest
