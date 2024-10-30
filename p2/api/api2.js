@@ -13,7 +13,7 @@ async function service2() {
     });
 
     if (response.data) {
-      console.log('service 2:',response.data);
+      // console.log('service 2:',response.data);
       const res = response.data.word[0];
       return res;
     }

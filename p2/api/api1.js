@@ -13,7 +13,7 @@ async function service1(word) {
     });
 
     if(response.data) {
-      console.log(response.data);
+      // console.log(response.data);
       const res = response.data;
       return res;
     }
